@@ -122,12 +122,9 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
   box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 4px rgba(90,70,30,.25),inset 0 0 0 1px rgba(110,85,40,.45),0 2px 4px rgba(0,0,0,.3)}
 .notice::before{content:"";position:absolute;inset:6px;border:1px solid rgba(110,85,40,.35);border-radius:2px;pointer-events:none}
 .notice p{text-shadow:0 1px 0 rgba(255,255,255,.45)}
-.notice p{margin:0 0 8px}.notice p:last-of-type{margin:0;padding-right:44px}
+.notice p{margin:0 0 8px}.notice p:last-of-type{margin:0}
 .grif{display:inline-block;margin:0 0 10px;padding:3px 8px;border:2px solid var(--bordo);color:var(--bordo);font:500 12px/1.2 Oswald,sans-serif;letter-spacing:.16em;transform:rotate(-2deg);opacity:.85}
 .cz{background:var(--ink);color:transparent;padding:0 2px;border-radius:1px}
-.notice .stamp{position:absolute;right:6px;bottom:6px;width:92px;--r:-12deg;pointer-events:none;
-  filter:grayscale(1) sepia(.9) saturate(.6) brightness(.55) contrast(1.15);opacity:.32;mix-blend-mode:multiply;
-  animation:slam .55s cubic-bezier(.2,1.4,.5,1) .6s both}
 
 /* кодовый замок: бронзовая панель, барабаны 5 + 6 */
 .lock{margin:0;padding:14px 12px 12px;border-radius:10px;
@@ -221,7 +218,6 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
           <div class="grif">РАССЕКРЕЧИВАЕТСЯ ПО КОДУ</div>
           <p>Материалы выдаются следователю по предъявлении кода доступа. Кодовое слово и цифры кода — из трекера на листе 3.</p>
           <p>Содержимое ячейки: <span class="cz">одно видео</span>, 1 шт. Попыток не ограничено. Подсказок не предусмотрено. Понятой наблюдает.</p>
-          <img class="stamp" src="assets/stamp.png" alt="">
         </div>
 
         <form class="lock" id="f" autocomplete="off" novalidate>
