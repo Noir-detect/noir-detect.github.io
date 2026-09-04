@@ -47,7 +47,9 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
 .slip::before{left:6px}.slip::after{right:6px}
 
 /* латунная рама ячейки */
-.cell{position:relative;display:grid;perspective:1800px;padding:10px;border-radius:9px;
+.cell{position:relative;display:grid;padding:10px;border-radius:9px;}
+.cell.arm{perspective:1800px}
+.cell{
   background:linear-gradient(135deg,#a3803a,#e6c87c 22%,#b48f46 48%,#e0c072 74%,#84642a);
   box-shadow:0 26px 44px -16px rgba(40,25,5,.65),0 4px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,245,210,.65),inset 0 -1px 0 rgba(0,0,0,.4)}
 .cell::before{content:"";position:absolute;inset:0;z-index:0;border-radius:9px;background:var(--noise);opacity:.5;mix-blend-mode:multiply;pointer-events:none}
@@ -89,19 +91,20 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
 .under a{color:var(--brass-hi)}
 
 /* дверца: эмаль спереди, глухая изнанка сзади */
-.door{grid-area:1/1;position:relative;z-index:2;display:flex;flex-direction:column;transform-style:preserve-3d;transform-origin:0 50%;
-  transform:rotateY(0deg);transition:transform 1.5s cubic-bezier(.6,.02,.25,1) .7s}
+.door{grid-area:1/1;position:relative;z-index:2;display:flex;flex-direction:column;transform-origin:0 50%;transition:transform 1.5s cubic-bezier(.6,.02,.25,1) .7s}
+.cell.arm .door{transform-style:preserve-3d;transform:rotateY(0deg)}
 .cell.open .door{transform:rotateY(100deg);pointer-events:none}
 .face{flex:1;position:relative;display:flex;flex-direction:column;gap:18px;padding:18px 16px;border-radius:4px;
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
   background:linear-gradient(170deg,#f4ebd6 0%,#ece0c4 45%,#e1d2ad 100%);
   box-shadow:inset 0 0 0 1px rgba(120,90,40,.35),inset 0 2px 0 rgba(255,255,255,.75),inset 0 -3px 8px rgba(120,90,40,.28),inset 0 0 70px rgba(150,120,70,.16)}
-.face::after{content:"";position:absolute;inset:0;z-index:0;border-radius:4px;background:var(--noise);opacity:.42;mix-blend-mode:multiply;pointer-events:none}
-.face>*{position:relative;z-index:1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face::after{content:"";position:absolute;inset:0;z-index:0;border-radius:4px;background:var(--noise);opacity:.22;pointer-events:none}
+.face>*{position:relative;z-index:1}
+.cell.arm .face,.cell.arm .face>*{backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .face>.screws{position:absolute;z-index:2}
-.back{position:absolute;inset:0;border-radius:4px;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+.back{display:none;position:absolute;inset:0;border-radius:4px;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
   background:linear-gradient(90deg,#c9b891,#dccca8 45%,#c2b189);box-shadow:inset 0 0 0 1px rgba(80,60,20,.4)}
 .cell.settled .door{position:absolute;grid-area:auto;inset:10px}
+.cell.arm .back{display:block}
 
 .screws{position:absolute;inset:0;pointer-events:none}
 .screws i{position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f6e6ad,#8d6d2c 70%,#5a4212);box-shadow:0 1px 1px rgba(0,0,0,.4)}
@@ -355,7 +358,8 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
   }
   function grant(instant) {
     if (instant) cell.classList.add("instant");
-    cell.classList.add("open");
+    cell.classList.add("arm");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { cell.classList.add("open"); }); });
     setTimeout(function () { settle(instant); }, instant ? 0 : 2300);
     door.setAttribute("aria-hidden", "true"); try { door.inert = true; } catch (e) {}
     inside.removeAttribute("aria-hidden");
