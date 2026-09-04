@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#a8905f">
+<title>Спецхран · Ячейка 2908/24-В</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600&family=PT+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#2b241e; --ink-soft:#5b4f44;
+  --brass:#c9a85c; --brass-hi:#f0d98f; --brass-lo:#7a5c22;
+  --bordo:#8e2d40; --rose:#e8a3b4;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;overflow-x:hidden}
+body{font-family:"PT Mono","Courier New",monospace;color:var(--ink);background:#b39a70;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+/* стена архива: тонированная бумага + виньетка; на широких экранах — сетка соседних ячеек */
+body::before{content:"";position:fixed;inset:0;z-index:-1;background-color:#b39a70;
+  background-image:radial-gradient(120% 90% at 50% 15%,rgba(255,240,205,.28),rgba(40,25,10,.62) 100%),url("../assets/paper2.jpg");
+  background-size:auto,cover;background-position:center;background-blend-mode:normal,multiply}
+@media (min-width:900px){
+  body::before{background-image:radial-gradient(120% 90% at 50% 15%,rgba(255,240,205,.28),rgba(40,25,10,.62) 100%),
+    repeating-linear-gradient(90deg,rgba(60,40,15,.26) 0 3px,rgba(255,240,210,.16) 3px 4px,transparent 4px 300px),
+    repeating-linear-gradient(0deg,rgba(60,40,15,.26) 0 3px,rgba(255,240,210,.16) 3px 4px,transparent 4px 220px),url("../assets/paper2.jpg");
+    background-size:auto,auto,auto,cover;background-blend-mode:normal,normal,normal,multiply}
+}
+.scene{position:relative;max-width:560px;min-height:100vh;margin:0 auto;padding:26px 12px 40px;display:flex;flex-direction:column;justify-content:center}
+@media (max-width:700px){.scene{overflow-x:clip}}
+.hidden{display:none!important}
+
+/* сопроводительный талон над ячейкой */
+.slip{position:relative;align-self:center;margin:0 0 26px;padding:10px 16px 9px;max-width:100%;
+  background:#eadfc3 url("../assets/paper.jpg") 70% 15%/220% auto;box-shadow:0 2px 6px rgba(0,0,0,.28);
+  font-size:11px;line-height:1.55;letter-spacing:.05em;color:var(--ink-soft);text-align:center;transform:rotate(-.7deg)}
+.slip b{display:block;font-weight:400;color:var(--ink);letter-spacing:.16em}
+.slip::before{content:"";position:absolute;left:50%;top:-9px;width:84px;height:22px;margin-left:-42px;
+  background:url("../assets/tape.png") center/100% 100% no-repeat;transform:rotate(-2deg);opacity:.92}
+
+/* латунная рама ячейки */
+.cell{position:relative;display:grid;perspective:1800px;padding:10px;border-radius:9px;
+  background:linear-gradient(135deg,#a3803a,#e6c87c 22%,#b48f46 48%,#e0c072 74%,#84642a);
+  box-shadow:0 26px 44px -16px rgba(40,25,5,.65),0 4px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,245,210,.65),inset 0 -1px 0 rgba(0,0,0,.4)}
+.cell::before{content:"";position:absolute;inset:0;z-index:0;border-radius:9px;background:var(--noise);opacity:.5;mix-blend-mode:multiply;pointer-events:none}
+.hinge{position:absolute;left:-4px;z-index:3;width:17px;height:48px;border-radius:5px;
+  background:linear-gradient(90deg,#6e5320,#e6c97c 45%,#9a7a35);box-shadow:0 2px 4px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.4)}
+.hinge:first-of-type{top:14%}.hinge:last-of-type{bottom:14%}
+
+/* нутро ячейки — видно после открытия */
+.inside{grid-area:1/1;position:relative;z-index:1;visibility:hidden;display:flex;flex-direction:column;padding:16px 16px 14px;border-radius:4px;
+  background:radial-gradient(130% 90% at 50% -10%,#7a5b40 0%,#3f2d20 55%,#22170e 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.6),inset 0 14px 30px rgba(0,0,0,.6),inset 24px 0 40px -12px rgba(0,0,0,.6)}
+.inside::after{content:"";position:absolute;inset:0;z-index:0;border-radius:4px;background:var(--noise);opacity:.3;pointer-events:none}
+.inside>*{position:relative;z-index:1}
+.cell.open .inside{visibility:visible;transition:visibility 0s .7s}
+
+.tag{position:relative;z-index:2;align-self:flex-end;width:214px;margin:8px 4px -26px 0;padding:12px 14px 11px 30px;border-radius:3px;
+  background:#e6d7b3 url("../assets/paper2.jpg") center/cover;box-shadow:0 8px 14px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(-30px) rotate(-12deg);transition:opacity .5s 1.7s,transform .8s cubic-bezier(.3,1.5,.5,1) 1.7s}
+.cell.open .tag{opacity:1;transform:rotate(-4deg)}
+.tag::before{content:"";position:absolute;left:10px;top:10px;width:9px;height:9px;border-radius:50%;background:#2a1d12;box-shadow:0 0 0 3px #cbb994}
+.tag::after{content:"";position:absolute;left:14px;top:-38px;width:2px;height:44px;background:linear-gradient(#8f7d59,#d6c69e);transform:rotate(16deg);transform-origin:50% 100%}
+.tag b{display:block;font:600 19px/1 Oswald,sans-serif;letter-spacing:.14em;color:var(--ink)}
+.tag span{display:block;margin-top:6px;font-size:10.5px;line-height:1.45;color:var(--ink-soft)}
+.tag .stamp2{position:absolute;right:-20px;top:-26px;width:94px;--r:12deg;opacity:0;mix-blend-mode:multiply;pointer-events:none}
+.cell.open .stamp2{animation:slam .5s cubic-bezier(.2,1.4,.5,1) 2.5s both}
+
+.pola{position:relative;width:min(100%,380px);aspect-ratio:896/1200;margin:0 auto -44px;
+  opacity:0;transform:translateY(14px) rotate(-1.3deg);transition:opacity .6s 1.95s,transform .7s cubic-bezier(.3,1.3,.5,1) 1.95s}
+.cell.open .pola{opacity:1;transform:rotate(-1.3deg)}
+.pola>img{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.pola video,.pola .pending{position:absolute;left:18.8%;top:21%;width:62.5%;height:48.9%;z-index:1}
+.pola video{object-fit:cover;background:#141110}
+.pending{display:flex;align-items:center;justify-content:center;padding:14px 16px;text-align:center;font-size:12px;line-height:1.55;color:var(--ink-soft);
+  background:#e9dfc6 url("../assets/paper.jpg") 60% 45%/230% auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),inset 0 0 30px rgba(120,90,40,.2)}
+.cap{position:absolute;left:14%;right:14%;top:73%;z-index:3;text-align:center;font-size:12px;letter-spacing:.06em;color:#5f5347}
+.shelf{height:12px;margin:0 -16px;background:linear-gradient(#c3a15f,#7d5e27 55%,#4b3812);
+  box-shadow:0 -6px 14px rgba(0,0,0,.45),0 3px 5px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,235,180,.55)}
+.under{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 2px 0;font-size:10.5px;letter-spacing:.05em;color:#c9b894}
+.under a{color:var(--brass-hi)}
+
+/* дверца: эмаль спереди, глухая изнанка сзади */
+.door{grid-area:1/1;position:relative;z-index:2;display:flex;flex-direction:column;transform-style:preserve-3d;transform-origin:0 50%;
+  transform:rotateY(0deg);transition:transform 1.5s cubic-bezier(.6,.02,.25,1) .7s}
+.cell.open .door{transform:rotateY(100deg);pointer-events:none}
+.face{flex:1;position:relative;display:flex;flex-direction:column;gap:18px;padding:18px 16px;border-radius:4px;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:linear-gradient(170deg,#f4ebd6 0%,#ece0c4 45%,#e1d2ad 100%);
+  box-shadow:inset 0 0 0 1px rgba(120,90,40,.35),inset 0 2px 0 rgba(255,255,255,.75),inset 0 -3px 8px rgba(120,90,40,.28),inset 0 0 70px rgba(150,120,70,.16)}
+.face::after{content:"";position:absolute;inset:0;z-index:0;border-radius:4px;background:var(--noise);opacity:.42;mix-blend-mode:multiply;pointer-events:none}
+.face>*{position:relative;z-index:1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face>.screws{position:absolute;z-index:2}
+.back{position:absolute;inset:0;border-radius:4px;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  background:repeating-linear-gradient(180deg,#d6c7a3 0 36px,#c6b58d 36px 40px);box-shadow:inset 0 0 0 1px rgba(80,60,20,.4)}
+
+.screws{position:absolute;inset:0;pointer-events:none}
+.screws i{position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f6e6ad,#8d6d2c 70%,#5a4212);box-shadow:0 1px 1px rgba(0,0,0,.4)}
+.screws i::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1.5px;margin-top:-1px;background:rgba(60,40,10,.7);transform:rotate(-30deg)}
+.screws i:nth-child(1){left:6px;top:6px}.screws i:nth-child(2){right:6px;top:6px}
+.screws i:nth-child(3){left:6px;bottom:6px}.screws i:nth-child(4){right:6px;bottom:6px}
+.face>.screws i{width:12px;height:12px}
+
+.plaque{text-align:center;padding:12px 12px 10px;border-radius:3px;
+  background:linear-gradient(180deg,#eacf86,#c8a556 50%,#a88536);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.25),0 2px 4px rgba(0,0,0,.35),0 0 0 1px #8b6a2a}
+.plaque h1{margin:0;font:400 44px/1 "Bebas Neue",Oswald,Impact,sans-serif;letter-spacing:.16em;text-indent:.16em;color:#3a2a10;
+  text-shadow:0 1px 0 rgba(255,240,200,.65),0 -1px 0 rgba(0,0,0,.35)}
+.plaque .sub{margin-top:7px;font:500 12px/1 Oswald,sans-serif;letter-spacing:.32em;text-indent:.32em;color:#4b3813;text-shadow:0 1px 0 rgba(255,240,200,.5)}
+
+.notice{padding:14px 16px 16px;font-size:13px;line-height:1.55;
+  background:#eee3c8 url("../assets/paper.jpg") 75% 12%/210% auto;box-shadow:0 3px 8px rgba(0,0,0,.28),0 1px 1px rgba(0,0,0,.2);transform:rotate(-.8deg)}
+.notice::before,.notice::after{content:"";position:absolute;top:-9px;width:80px;height:21px;background:url("../assets/tape.png") center/100% 100% no-repeat;opacity:.92}
+.notice::before{left:10px;transform:rotate(-7deg)}.notice::after{right:10px;transform:rotate(6deg)}
+.notice p{margin:0 0 8px}.notice p:last-of-type{margin:0;padding-right:44px}
+.grif{display:inline-block;margin:0 0 10px;padding:3px 8px;border:2px solid var(--bordo);color:var(--bordo);font:500 12px/1.2 Oswald,sans-serif;letter-spacing:.16em;transform:rotate(-2deg);opacity:.85}
+.cz{background:var(--ink);color:transparent;padding:0 2px;border-radius:1px}
+.notice .stamp{position:absolute;right:-10px;bottom:-18px;width:98px;--r:-14deg;mix-blend-mode:multiply;pointer-events:none;
+  animation:slam .55s cubic-bezier(.2,1.4,.5,1) .6s both}
+
+/* кодовый замок: бронзовая панель, барабаны 5 + 6 */
+.lock{margin:0;padding:14px 12px 12px;border-radius:10px;
+  background:linear-gradient(165deg,#5a4630,#3a2b1c 60%,#2c2014);
+  box-shadow:inset 0 1px 0 rgba(255,220,150,.18),inset 0 0 0 1px rgba(0,0,0,.5),0 0 0 1px #9c7a36,0 3px 6px rgba(0,0,0,.35)}
+.lock fieldset{margin:0 0 10px;padding:0;border:0;min-width:0;text-align:center}
+.lock legend{padding:0;margin:0 auto 7px;font:500 10.5px/1 Oswald,sans-serif;letter-spacing:.26em;text-indent:.26em;color:var(--brass-hi);opacity:.85}
+.drums{display:grid;gap:6px;max-width:440px;margin:0 auto;padding:5px;border-radius:8px;background:rgba(0,0,0,.35);
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.6),0 1px 0 rgba(255,220,150,.12)}
+.drums.l{grid-template-columns:repeat(5,1fr)}.drums.d{grid-template-columns:repeat(6,1fr)}
+.drum{display:block;width:100%;height:56px;padding:0;margin:0;border:0;border-radius:6px;outline:0;-webkit-appearance:none;appearance:none;
+  font:26px "PT Mono",monospace;text-align:center;text-transform:uppercase;color:var(--ink);caret-color:var(--brass-lo);
+  background:linear-gradient(180deg,#bfae88 0%,#f6efdc 32%,#f6efdc 66%,#b9a67c 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),inset 0 3px 5px rgba(0,0,0,.35),inset 0 -2px 3px rgba(0,0,0,.2),0 1px 0 rgba(255,235,180,.25);
+  transition:box-shadow .15s,color .2s}
+.drum:focus{box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),inset 0 3px 5px rgba(0,0,0,.3),0 0 0 2.5px var(--brass),0 0 14px rgba(240,217,143,.55)}
+.drum::selection{background:rgba(201,168,92,.55)}
+.drum:disabled{opacity:1;color:var(--ink);-webkit-text-fill-color:var(--ink)}
+.drum.filled{animation:tick .18s ease-out}
+.drum.bad{color:var(--bordo);background:linear-gradient(180deg,#c9a6a0,#f5e1de 32%,#f5e1de 66%,#c4a09b);box-shadow:inset 0 0 0 2px var(--bordo),inset 0 3px 5px rgba(0,0,0,.3)}
+.lock.err .drums{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
+.cell.open .drum{box-shadow:inset 0 0 0 2px var(--brass),0 0 12px rgba(240,217,143,.7)}
+.go{display:block;width:100%;max-width:440px;margin:4px auto 0;padding:13px 16px 12px;border:0;border-radius:6px;cursor:pointer;
+  font:600 15px/1 Oswald,sans-serif;letter-spacing:.28em;text-indent:.28em;color:#2b1f08;
+  background:linear-gradient(180deg,#f0d98f,#c9a85c 55%,#a3822f);
+  box-shadow:0 3px 0 #5e4718,0 6px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.6);
+  text-shadow:0 1px 0 rgba(255,240,200,.6);transition:transform .08s,box-shadow .08s}
+.go::before{content:"";display:inline-block;width:9px;height:15px;margin:-3px 12px 0 -6px;vertical-align:middle;
+  background:radial-gradient(circle at 50% 30%,#2b1f08 3.5px,transparent 4px),linear-gradient(#2b1f08,#2b1f08) 50% 100%/4px 8px no-repeat}
+.go:active{transform:translateY(3px);box-shadow:0 0 0 #5e4718,0 2px 4px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.6)}
+.go:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.msg{min-height:20px;margin:12px 2px 0;font-size:12.5px;line-height:1.45;text-align:center;color:var(--rose)}
+.msg.pop{animation:fade .35s ease-out}
+.bolt{position:absolute;right:-34px;top:50%;width:76px;height:22px;margin-top:-11px;border-radius:4px;z-index:3;
+  background:linear-gradient(180deg,#f0d98f,#b8934a 55%,#7a5c22);
+  box-shadow:0 2px 4px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.35);
+  transition:transform .45s cubic-bezier(.6,-.2,.3,1.3) .15s}
+.bolt::after{content:"";position:absolute;left:9px;top:6px;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff2c0,#7a5c22 75%)}
+.cell.open .bolt{transform:translateX(-24px)}
+
+.foot{display:flex;justify-content:space-between;gap:12px;margin:18px 8px 0;font-size:10.5px;letter-spacing:.04em;color:#3f3120;opacity:.75}
+
+@keyframes slam{0%{opacity:0;transform:rotate(var(--r)) scale(1.9)}60%{opacity:.95;transform:rotate(var(--r)) scale(.96)}100%{opacity:.9;transform:rotate(var(--r)) scale(1)}}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+@keyframes tick{from{transform:translateY(-5px)}to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.cell.instant *,.cell.instant{transition:none!important;animation-duration:0s!important;animation-delay:0s!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}}
+@media (min-width:600px){.plaque h1{font-size:54px}.drum{height:62px}.face{padding:22px 20px}.notice{font-size:13.5px}}
+</style>
+</head>
+<body>
+<main class="scene">
+  <header class="slip">
+    <b>ОТДЕЛ ПО ОСОБО ТЁПЛЫМ ДЕЛАМ</b>
+    Дело № 2908/24-В · спецхран · стеллаж В · полка 3
+  </header>
+
+  <section class="cell" id="cell" aria-label="Ячейка спецхрана">
+    <i class="hinge"></i><i class="hinge"></i>
+
+    <div class="inside" id="inside" aria-hidden="true">
+      <div class="tag">
+        <b>ДОСТУП ВЫДАН</b>
+        <span>код принят · выдано следователю по особо тёплым делам · без права отзыва</span>
+        <img class="stamp2" src="../assets/stamp2.png" alt="">
+      </div>
+      <div class="pola">
+        <video id="v" controls playsinline preload="metadata" class="hidden"></video>
+        <div class="pending" id="pending">Видеоматериалы ещё в пути из спецхрана. Загляни позже — доступ уже выдан и не отзывается. Понятой стережёт ячейку.</div>
+        <img src="../assets/polaroid.png" alt="">
+        <div class="cap">вещдок № 1 · хранить вечно</div>
+      </div>
+      <div class="shelf"></div>
+      <div class="under">
+        <span>инв. № 2908/24-В-01 · видеоматериалы дела</span>
+        <span class="backup hidden" id="backup">Резервная копия: <a id="backupLink" href="#" target="_blank" rel="noopener"></a></span>
+      </div>
+    </div>
+
+    <div class="door" id="door">
+      <div class="face">
+        <div class="screws"><i></i><i></i><i></i><i></i></div>
+        <div class="plaque">
+          <div class="screws"><i></i><i></i><i></i><i></i></div>
+          <h1>СПЕЦХРАН</h1>
+          <div class="sub">ЯЧЕЙКА 2908/24-В</div>
+        </div>
+
+        <div class="notice">
+          <div class="grif">РАССЕКРЕЧИВАЕТСЯ ПО КОДУ</div>
+          <p>Материалы выдаются следователю по предъявлении кода доступа. Кодовое слово и цифры кода — из трекера на листе 3.</p>
+          <p>Содержимое ячейки: <span class="cz">одно видео</span>, 1 шт. Попыток не ограничено. Подсказок не предусмотрено. Понятой наблюдает.</p>
+          <img class="stamp" src="../assets/stamp.png" alt="">
+        </div>
+
+        <form class="lock" id="f" autocomplete="off" novalidate>
+          <fieldset>
+            <legend>КОДОВОЕ СЛОВО · 5 ЛИТЕР</legend>
+            <div class="drums l">
+              <input class="drum" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="литера 1">
+              <input class="drum" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="литера 2">
+              <input class="drum" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="литера 3">
+              <input class="drum" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="литера 4">
+              <input class="drum" type="text" inputmode="text" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="литера 5">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>ЦИФРЫ КОДА · 6 ЗНАКОВ</legend>
+            <div class="drums d">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="цифра 1">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="цифра 2">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="цифра 3">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="цифра 4">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="цифра 5">
+              <input class="drum" type="text" inputmode="numeric" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-label="цифра 6">
+            </div>
+          </fieldset>
+          <button class="go" id="go" type="submit">ПРЕДЪЯВИТЬ</button>
+          <div class="msg" id="msg" role="status" aria-live="polite"></div>
+          <div class="bolt" aria-hidden="true"></div>
+        </form>
+      </div>
+      <div class="back"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Экз. № 1 (из 1) · Том № 1 (он же единственный)</span>
+    <span>хранить вечно</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // Настройки: имя видеофайла рядом со страницей и (опционально) резервная ссылка.
+  var VIDEO_SRC = "video.mp4";
+  var BACKUP_URL = "";              // например ссылка на Яндекс Диск / Google Drive; пусто — блок скрыт
+  var BACKUP_LABEL = "открыть";
+  var HASH = "324068705ca85e7a2ed9bf52719bdcf0e12c544ec1d2333fac473a07831d734a"; // sha-256 от нормализованного кода
+
+  var $ = function (id) { return document.getElementById(id); };
+  var cell = $("cell"), door = $("door"), inside = $("inside"), form = $("f"), msg = $("msg"), go = $("go"),
+      video = $("v"), pending = $("pending"), backup = $("backup"), backupLink = $("backupLink");
+  var drums = Array.prototype.slice.call(form.querySelectorAll(".drum")), N = drums.length;
+  var tries = 0, busy = false;
+  var fails = [
+    "Код не принят. Понятой качает головой.",
+    "Снова мимо. Сверься с трекером на листе 3.",
+    "Пять литер, шесть цифр. Дефис необязателен.",
+    "Понятой свернулся. Не сдавайся."
+  ];
+
+  function norm(s) {
+    return (s || "").toUpperCase().replace(/[^0-9A-ZА-ЯЁ]/g, "");
+  }
+  async function sha256(str) {
+    var buf = new TextEncoder().encode(str);
+    var h = await crypto.subtle.digest("SHA-256", buf);
+    return Array.from(new Uint8Array(h)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+  }
+  function code() { return drums.map(function (d) { return d.value; }).join(""); }
+  function say(t) { msg.textContent = t; msg.classList.remove("pop"); void msg.offsetWidth; if (t) msg.classList.add("pop"); }
+  function clearBad() { drums.forEach(function (d) { d.classList.remove("bad"); }); }
+  function set(i, ch) {
+    var d = drums[i]; d.value = ch; d.dataset.prev = ch; d.classList.remove("filled");
+    if (ch) { void d.offsetWidth; d.classList.add("filled"); }
+  }
+  function focusAt(i) {
+    var d = drums[Math.max(0, Math.min(N - 1, i))];
+    d.focus(); setTimeout(function () { try { d.select(); } catch (e) {} }, 0);
+  }
+  // распределяет строку по барабанам начиная с start; заполнили все — предъявляем сами
+  function fill(start, s) {
+    var j = start;
+    for (var k = 0; k < s.length && j < N; k++, j++) set(j, s[k]);
+    if (j >= N) {
+      focusAt(N - 1);
+      if (drums.every(function (d) { return d.value; })) setTimeout(verify, 140);
+    } else focusAt(j);
+  }
+
+  drums.forEach(function (d, i) {
+    d.addEventListener("focus", function () { setTimeout(function () { try { d.select(); } catch (e) {} }, 0); });
+    d.addEventListener("input", function () {
+      var prev = d.dataset.prev || "", s = norm(d.value);
+      if (s.length > 1 && prev) {
+        if (s.indexOf(prev) === 0) s = s.slice(prev.length);
+        else if (s.slice(-prev.length) === prev) s = s.slice(0, -prev.length);
+      }
+      clearBad();
+      if (!s) { set(i, norm(d.value) ? prev : ""); return; }
+      fill(i, s);
+    });
+    d.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace" && !d.value && i > 0) { e.preventDefault(); set(i - 1, ""); focusAt(i - 1); }
+      else if (e.key === "ArrowLeft" && i > 0) { e.preventDefault(); focusAt(i - 1); }
+      else if (e.key === "ArrowRight" && i < N - 1) { e.preventDefault(); focusAt(i + 1); }
+    });
+    d.addEventListener("beforeinput", function (e) {
+      if (e.inputType === "deleteContentBackward" && !d.value && i > 0) { e.preventDefault(); set(i - 1, ""); focusAt(i - 1); }
+    });
+    d.addEventListener("paste", function (e) {
+      var t = norm((e.clipboardData || window.clipboardData).getData("text"));
+      e.preventDefault();
+      if (!t) return;
+      clearBad();
+      fill(t.length >= N ? 0 : i, t);
+    });
+  });
+  form.addEventListener("click", function (e) {
+    if (e.target.classList.contains("drums") || e.target.tagName === "LEGEND") {
+      var k = 0; while (k < N - 1 && drums[k].value) k++;
+      focusAt(k);
+    }
+  });
+
+  function grant(instant) {
+    if (instant) cell.classList.add("instant");
+    cell.classList.add("open");
+    door.setAttribute("aria-hidden", "true"); try { door.inert = true; } catch (e) {}
+    inside.removeAttribute("aria-hidden");
+    drums.forEach(function (d) { d.disabled = true; });
+    go.disabled = true; go.textContent = "ПРИНЯТО";
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    try { localStorage.setItem("spechran", "1"); } catch (e) {}
+    if (BACKUP_URL) { backupLink.href = BACKUP_URL; backupLink.textContent = BACKUP_LABEL; backup.classList.remove("hidden"); }
+    var src = VIDEO_SRC + "?v=" + Date.now();
+    fetch(VIDEO_SRC, { method: "HEAD" }).then(function (r) {
+      if (r.ok) { video.src = src; video.classList.remove("hidden"); pending.classList.add("hidden"); }
+    }).catch(function () {});
+  }
+  async function verify() {
+    if (busy || cell.classList.contains("open")) return;
+    var v = norm(code());
+    if (!v) { say("Пусто. Спецхран ждёт код."); focusAt(0); return; }
+    busy = true;
+    var h = await sha256(v);
+    busy = false;
+    if (h === HASH) { say(""); grant(false); }
+    else {
+      say(fails[Math.min(tries, fails.length - 1)]); tries++;
+      drums.forEach(function (d) { d.classList.add("bad"); });
+      form.classList.remove("err"); void form.offsetWidth; form.classList.add("err");
+      focusAt(0);
+    }
+  }
+  form.addEventListener("submit", function (e) { e.preventDefault(); verify(); });
+  try { if (localStorage.getItem("spechran") === "1") grant(true); } catch (e) {}
+})();
+</script>
+</body>
+</html>
