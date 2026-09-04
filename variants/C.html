@@ -60,7 +60,7 @@ body::before{content:"";position:fixed;inset:0;background:var(--noise) 0 0/260px
   background:#efe3c6 url(../assets/paper2.jpg) center/cover;transform:rotate(-.6deg);
   box-shadow:0 1px 1px rgba(0,0,0,.2),0 10px 24px -10px rgba(0,0,0,.45)}
 .label.shake{animation:shake .45s ease-out}
-.tape{position:absolute;width:96px;z-index:4;opacity:.8;pointer-events:none}
+.tape{position:absolute;width:88px;z-index:4;opacity:.55;pointer-events:none}
 .t1{left:-26px;top:-12px;transform:rotate(-38deg)}
 .t2{right:-26px;top:-12px;transform:rotate(36deg)}
 .lhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:1px solid rgba(42,36,32,.55);
@@ -96,7 +96,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
 .okmark{margin:18px auto 0;color:var(--rose);border-color:var(--rose);outline-color:var(--rose);transform:rotate(-2.5deg)}
 .lfoot{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;min-height:82px;margin-top:8px;font:11px/1.5 "PT Mono",monospace;color:var(--ink2)}
 .lfoot i{font-style:normal;letter-spacing:.06em}
-.stamp{position:absolute;right:-14px;bottom:-22px;width:138px;transform:rotate(-14deg);opacity:.92;mix-blend-mode:multiply;pointer-events:none;
+.stamp{position:absolute;right:-62px;bottom:-54px;width:204px;transform:rotate(-14deg);opacity:.92;mix-blend-mode:multiply;pointer-events:none;
   animation:slam .5s cubic-bezier(.2,1.4,.4,1) .6s both}
 .efoot{position:relative;z-index:3;display:flex;justify-content:space-between;gap:10px;margin:22px 4px 0;
   font:500 10.5px/1.5 Oswald,Impact,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--brown)}
@@ -111,7 +111,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
 .sttl{margin:14px 0 0;font:700 clamp(28px,8vw,36px)/1.05 Oswald,Impact,sans-serif;letter-spacing:.05em;color:var(--ink);mix-blend-mode:multiply}
 .ssub{margin-top:4px;font:12px/1.5 "PT Mono",monospace;color:var(--ink2)}
 .okline{display:inline-block;margin:14px 0 0;color:var(--rose);border-color:var(--rose);outline-color:var(--rose);transform:rotate(-1.5deg)}
-.polwrap{display:flex;justify-content:center;margin-top:4px}
+.polwrap{display:flex;justify-content:center;margin:-22px 0 -38px}
 .pol{position:relative;flex:none;width:min(124%,470px);aspect-ratio:896/1200;margin:0;transform:rotate(-2deg);transition:transform .8s cubic-bezier(.2,1.2,.3,1) 2.55s,opacity .5s 2.55s}
 .env:not(.open) .pol{transform:rotate(-2deg) translateY(-26px);opacity:0}
 .polimg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.28))}
@@ -127,7 +127,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
 .backup a{color:var(--ink);text-decoration:underline dotted}
 .snote{margin:16px 0 0;font:12.5px/1.55 "PT Mono",monospace;color:var(--ink2)}
 .sfoot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px;font:11px/1.4 "PT Mono",monospace;color:var(--ink2)}
-.stamp2{width:112px;margin:-34px -24px -28px 0;transform:rotate(9deg);opacity:.9;mix-blend-mode:multiply}
+.stamp2{width:176px;margin:-70px -60px -58px 0;transform:rotate(9deg);opacity:.9;mix-blend-mode:multiply}
 
 @keyframes slam{0%{transform:rotate(-26deg) scale(1.9);opacity:0}60%{opacity:.92}100%{transform:rotate(-14deg) scale(1);opacity:.92}}
 @keyframes shake{0%,100%{transform:rotate(-.6deg) translateX(0)}20%{transform:rotate(-.6deg) translateX(-5px)}40%{transform:rotate(-.6deg) translateX(5px)}60%{transform:rotate(-.6deg) translateX(-3px)}80%{transform:rotate(-.6deg) translateX(3px)}}
@@ -157,7 +157,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
 
     <div class="drawer"><div>
       <section class="sheet hidden" id="granted" aria-live="polite">
-        <div class="lhead"><span>Отдел по особо тёплым делам</span><b>к делу № 2908/24-В</b></div>
+        <div class="lhead"><span>Отдел по особо<br>тёплым делам</span><b>к делу № 2908/24-В</b></div>
         <h2 class="sttl">ВИДЕОМАТЕРИАЛЫ ДЕЛА</h2>
         <div class="ssub">вещественное доказательство № 1 · выдано следователю по коду</div>
         <div class="stampline okline">КОД ПРИНЯТ · ДОСТУП ВЫДАН</div>
@@ -187,7 +187,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
         </defs>
         <circle cx="80" cy="104" r="15" fill="url(#btn)" stroke="#4b3319" stroke-width=".8"/>
         <circle cx="80" cy="104" r="2.6" fill="#3a2915"/>
-        <path id="threadPath" d="" fill="none" stroke="#a8332b" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" filter="url(#ts)"/>
+        <path id="threadPath" d="" fill="none" stroke="#a8332b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#ts)"/>
       </svg>
       <span class="side sl">Лично. В руки.</span>
       <span class="side sr">Не сгибать</span>
@@ -195,13 +195,13 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
       <div class="label" id="label">
         <img class="tape t1" src="../assets/tape.png" alt="">
         <img class="tape t2" src="../assets/tape.png" alt="">
-        <div class="lhead"><span>Отдел по особо тёплым делам</span><b>Дело № 2908/24-В</b></div>
+        <div class="lhead"><span>Отдел по особо<br>тёплым делам</span><b>Дело № 2908/24-В</b></div>
         <div class="pkt"><span>Пакет №</span><span class="v">2908/24-В</span></div>
         <div class="grif">СОВЕРШЕННО ЛИЧНОЕ</div>
         <h1 class="ttl">СПЕЦХРАН</h1>
         <div class="sub">видеоматериалы дела · хранить вечно</div>
         <div class="stampline">ВСКРЫТЬ ПО ПРЕДЪЯВЛЕНИИ КОДА</div>
-        <p>Материалы выдаются следователю по предъявлении кода доступа. Кодовое слово и цифры кода — из трекера на листе 3.</p>
+        <p>Материалы выдаются следователю по предъявлении кода доступа. Кодовое слово и цифры кода — из трекера на листе&nbsp;3.</p>
         <p class="dim">Содержимое: <span class="cz">одно сердце</span> (1 шт.). Попыток не ограничено. Подсказок не предусмотрено. Понятой наблюдает.</p>
 
         <form id="f" autocomplete="off" novalidate>
@@ -256,7 +256,7 @@ input::placeholder{color:rgba(90,79,71,.42);letter-spacing:.1em}
     var T = { x: 80, y: 36 }, B = { x: 80, y: 104 }, M = { x: 80, y: 70 }, d = "", p, Bc, pt;
     var f = function (o) { return o.x.toFixed(1) + " " + o.y.toFixed(1); };
     for (var i = 0; i < 4; i++) {
-      p = 17.5 + i * 1.6;
+      p = 17.5 + i * 2;
       var Tc = { x: T.x + (i % 2 ? .7 : -.7), y: T.y }; Bc = { x: B.x + (i % 2 ? -.7 : .7), y: B.y };
       d += (i ? "L" : "M") + f(tangent(Tc, M, p, 1)) + " A" + p + " " + p + " 0 1 1 " + f(tangent(Tc, M, p, -1)) +
            " L" + f(tangent(Bc, M, p, -1)) + " A" + p + " " + p + " 0 1 0 " + f(tangent(Bc, M, p, 1)) + " ";
