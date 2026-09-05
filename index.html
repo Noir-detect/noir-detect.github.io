@@ -112,8 +112,8 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
 .knob.sm{width:24px;height:24px}.knob.sm::after{height:7px;top:3px}
 .led{width:7px;height:7px;border-radius:50%;flex:none;background:#4a1616;box-shadow:inset 0 1px 1px rgba(0,0,0,.6);transition:background .2s 2.45s,box-shadow .2s 2.45s}
 .cell.open .led{background:#ff4a3d;box-shadow:0 0 7px 1px rgba(255,74,61,.8)}
-.brand{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;font:500 10px/1 Oswald,sans-serif;letter-spacing:.24em;color:#6b5a3e;text-transform:uppercase;white-space:nowrap}
-.grille{flex:1 1 30px;height:22px;min-width:22px;border-radius:3px;opacity:.5;background:repeating-linear-gradient(90deg,#7d6746 0 2px,transparent 2px 6px)}
+.brand{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;font:500 10px/1 Oswald,sans-serif;letter-spacing:.18em;color:#6b5a3e;text-transform:uppercase;white-space:nowrap}
+.grille{flex:1 1 0;height:22px;min-width:0;border-radius:3px;opacity:.5;background:repeating-linear-gradient(90deg,#7d6746 0 2px,transparent 2px 6px)}
 
 /* видеокассета перед телевизором */
 .vhs{position:relative;width:min(76%,285px);aspect-ratio:188/106;margin:16px auto -4px;border-radius:5px;
@@ -125,8 +125,8 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
   background:radial-gradient(circle,#0a0908 0 20%,transparent 21% 33%,#100e0c 34% 100%),repeating-conic-gradient(#443b33 0 16deg,#17130f 16deg 60deg);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
 .vhs .reel.l{left:12%}.vhs .reel.r{right:12%}
-.vhs .label{position:absolute;left:8%;right:8%;bottom:8%;height:34%;padding:5px 8px 5px 14px;border-radius:2px;overflow:hidden;
-  background:#efe4c8 url("assets/paper.jpg") 50% 40%/320% auto;box-shadow:0 1px 2px rgba(0,0,0,.55);color:var(--ink);font-size:9.5px;line-height:1.35}
+.vhs .label{position:absolute;left:8%;right:8%;bottom:8%;height:38%;padding:4px 8px 4px 14px;border-radius:2px;overflow:hidden;
+  background:#efe4c8 url("assets/paper.jpg") 50% 40%/320% auto;box-shadow:0 1px 2px rgba(0,0,0,.55);color:var(--ink);font-size:9.5px;line-height:1.3;white-space:nowrap}
 .vhs .label::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--bordo)}
 .vhs .label b{display:block;font:600 11.5px/1 Oswald,sans-serif;letter-spacing:.16em;margin-bottom:3px}
 .shelf{height:12px;margin:0 -16px;background:linear-gradient(#c3a15f,#7d5e27 55%,#4b3812);
@@ -221,6 +221,8 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
 @keyframes fade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
 .cell.instant *,.cell.instant{transition:none!important;animation-duration:0s!important;animation-delay:0s!important}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}}
+@media (max-width:380px){.brand{letter-spacing:.1em}}
+@media (max-width:340px){.brand{font-size:9px}.vhs .label{font-size:8.5px}}
 @media (min-width:600px){.plaque h1{font-size:54px}.drum{height:62px}.face{padding:22px 20px}.notice{font-size:13.5px}}
 </style>
 </head>
@@ -257,7 +259,7 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
       </div>
       <div class="vhs">
         <div class="win"></div><div class="reel l"></div><div class="reel r"></div>
-        <div class="label"><b>ВЕЩДОК № 1</b>дело 2908/24-В · запись № 1<br>хранить вечно</div>
+        <div class="label"><b>ВЕЩДОК № 1</b>2908/24-В · хранить вечно</div>
       </div>
       <div class="shelf"></div>
       <div class="under">
