@@ -81,7 +81,7 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
 .cell.open .pola{opacity:1;transform:rotate(-1.3deg)}
 .pola>img{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
 .pola video,.pola .pending{position:absolute;left:18.8%;top:21%;width:62.5%;height:48.9%;z-index:1}
-.pola video{object-fit:cover;background:#141110}
+.pola video{object-fit:cover;object-position:50% 18%;background:#141110}
 .pending{display:flex;align-items:center;justify-content:center;padding:14px 16px;text-align:center;font-size:12px;line-height:1.55;color:var(--ink-soft);
   background:#e9dfc6 url("assets/paper.jpg") 60% 45%/230% auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),inset 0 0 30px rgba(120,90,40,.2)}
 .cap{position:absolute;left:14%;right:14%;top:73%;z-index:3;text-align:center;font-size:12px;letter-spacing:.06em;color:#5f5347}
@@ -196,7 +196,7 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;background-color:#a
         <img class="stamp2" src="assets/stamp2.png" alt="">
       </div>
       <div class="pola">
-        <video id="v" controls playsinline preload="metadata" class="hidden"></video>
+        <video id="v" controls playsinline preload="metadata" poster="poster.jpg" class="hidden"></video>
         <div class="pending" id="pending">Видеоматериалы ещё в пути из спецхрана. Загляни позже — доступ уже выдан и не отзывается. Понятой стережёт ячейку.</div>
         <img src="assets/polaroid.png" alt="">
         <div class="cap">вещдок № 1 · хранить вечно</div>
